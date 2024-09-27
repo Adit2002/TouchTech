@@ -11,7 +11,7 @@ const s3Client = new S3Client({
     }
 });
 async function uploadFileToS3(file, fileName,Em){
-    const fileBuffer = file;
+    // const fileBuffer = file;
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: `${fileName}`,
@@ -19,7 +19,7 @@ async function uploadFileToS3(file, fileName,Em){
     }
     const command = new PutObjectCommand(params);
     try{
-        const response = await s3Client.send(command);
+        await s3Client.send(command);
         const uri=`https://touchtech-assignment2.s3.amazonaws.com/${fileName}`;
         await connectDB();
         const updatedUser = await User.findOneAndUpdate(

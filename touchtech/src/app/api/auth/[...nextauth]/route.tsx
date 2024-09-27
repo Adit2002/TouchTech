@@ -56,7 +56,7 @@ const authOption: NextAuthOptions = {
         ];
         const userExist = await User.findOne({ email: profile.email });
         if (!userExist) {
-          const user = await User.create({
+          await User.create({
             email: profile.email,
             name: profile.name,
             customwallpaper: emptyarr,

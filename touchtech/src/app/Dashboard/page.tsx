@@ -16,24 +16,17 @@ export default function WallpaperSelector() {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  let EMAIL=null;
-  if(session){
-    console.log(session);
-    if(session.user){
-      EMAIL=session.user.email;
-    }
-    console.log(EMAIL);
-  }
-  else{
-    console.log('NO');
-  }
+  
+  // Extract email from session
+  const email = session?.user?.email || null;
+
   useEffect(() => {
     if (status === 'loading') return;
     
     const fetchWallpapers = async () => {
-      if (EMAIL) {
+      if (email) {
         try {
-          const wallpapersData = await fetchUserWallpaperByEmail(EMAIL);
+          const wallpapersData = await fetchUserWallpaperByEmail(email);
           setWallpapers(wallpapersData);
         } catch (error) {
           console.error('Error fetching wallpapers:', error);
@@ -42,7 +35,8 @@ export default function WallpaperSelector() {
     };
     
     fetchWallpapers();
-  }, [session, status,EMAIL]); 
+  }, [session, status, email]); 
+
   const handleWallpaperChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedWallpaper(e.target.value);
   };
@@ -67,8 +61,8 @@ export default function WallpaperSelector() {
     formData.append('customFileName', fileName);
 
     try {
-      if(EMAIL===null) return;
-      await uploadFile(formData, EMAIL); 
+      if (!email) return; // Ensure email is present
+      await uploadFile(formData, email); 
       setMessage('File uploaded successfully!');
       setFile(null);
       setFileName('');
@@ -105,6 +99,12 @@ export default function WallpaperSelector() {
               </option>
             ))}
           </select>
+        )}
+        {/* Displaying User's Email */}
+        {email && (
+          <p className="text-white text-center mt-4">
+            Logged in as: {email}
+          </p>
         )}
       </div>
 

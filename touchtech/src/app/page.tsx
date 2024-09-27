@@ -3,6 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
+  
   return (
     <section className="min-h-screen bg-gray-100 text-gray-800 flex flex-col justify-center items-center p-6">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -17,7 +18,7 @@ export default function Home() {
         {session ? (
           <div className="text-center">
             <p className="text-xl text-gray-700 mb-4">
-              Hello, {session.user?.name}! You are logged in.
+              Hello, {session.user?.name} ({session.user?.email})! You are logged in.
             </p>
             <button
               onClick={() => signOut()}

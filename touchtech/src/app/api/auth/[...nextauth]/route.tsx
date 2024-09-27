@@ -6,14 +6,6 @@ import User from "@/models/user";
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth environment variables");
 };
-declare module "next-auth" {
-  interface Session {
-    user:{
-       name?: string | null;
-       email?: string | null;
-    }
-  }
-};
 const authOption: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -27,19 +19,7 @@ const authOption: NextAuthOptions = {
   secret: process.env.GOOGLE_CLIENT_SECRET,
   callbacks: {
     async session({ session }) {
-      // console.log(session);
-      if (session?.user?.email) {
-        try {
-          await connectDB();
-          const sessionUser = await User.findOne({
-            email: session.user.email,
-          });
-          session.user.name = sessionUser.name;
-          return session;
-        } catch (err) {
-          console.log(err);
-        }
-      }
+      return session;
     },
     async signIn({ profile }) {
       if (!profile) return false;

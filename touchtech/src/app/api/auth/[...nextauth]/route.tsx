@@ -8,11 +8,13 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 };
 declare module "next-auth" {
   interface Session {
-      id: string;
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
+    User:{
+       id: string;
+       name?: string | null;
+       email?: string | null;
+       image?: string | null;
     }
+  }
 };
 const authOption: NextAuthOptions = {
   session: {

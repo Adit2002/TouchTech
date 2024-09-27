@@ -35,7 +35,7 @@ const authOption: NextAuthOptions = {
           });
           session.id = sessionUser._id.toString();
           session.name = sessionUser.name;
-          return sessionUser;
+          return session;
         } catch (err) {
           console.log(err);
         }

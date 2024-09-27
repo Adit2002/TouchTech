@@ -3,7 +3,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
-  console.log(session);
   return (
     <section className="min-h-screen bg-gray-100 text-gray-800 flex flex-col justify-center items-center p-6">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">

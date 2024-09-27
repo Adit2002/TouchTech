@@ -17,11 +17,11 @@ export default function WallpaperSelector() {
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   let EMAIL=null;
-  // console.log();
-  // console.log(session.email);
   if(session){
     console.log(session);
-    EMAIL=session.user.email;
+    if(session.user){
+      EMAIL=session.user.email;
+    }
     console.log(EMAIL);
   }
   else{

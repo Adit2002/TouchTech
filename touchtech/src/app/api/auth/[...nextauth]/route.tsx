@@ -19,7 +19,13 @@ const authOption: NextAuthOptions = {
   secret: process.env.GOOGLE_CLIENT_SECRET,
   callbacks: {
     async session({ session }) {
-      return session;
+      try{
+        console.log(session);
+        const Sesuser= await User.findOne({ email: session.user.email });
+        return session;
+      }catch(err){
+        console.log(err);
+      }
     },
     async signIn({ profile }) {
       if (!profile) return false;

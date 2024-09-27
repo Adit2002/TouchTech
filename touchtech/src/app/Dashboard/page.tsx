@@ -16,7 +16,7 @@ export default function WallpaperSelector() {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  
+  console.log(session);
   // State to hold email from local storage
   const [email, setEmail] = useState<string | null>(null);
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data: session } = useSession();
+  console.log(session);
   useEffect(() => {
     if (session && typeof window !== 'undefined') {
       localStorage.setItem("userProfile", JSON.stringify({
@@ -11,7 +12,7 @@ export default function Home() {
         name: session.user.name,
       }));
     }
-  }, [session]);
+  }, []);
   const [email, setEmail] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
 

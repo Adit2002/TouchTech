@@ -5,7 +5,7 @@ import { connectDB } from "@/utils/database";
 import User from "@/models/user";
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth environment variables");
-}
+};
 declare module "next-auth" {
   interface Session {
       id: string;
@@ -24,6 +24,7 @@ const authOption: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.GOOGLE_CLIENT_SECRET,
   callbacks: {
     async session({ session }) {
       if (session?.user?.email) {

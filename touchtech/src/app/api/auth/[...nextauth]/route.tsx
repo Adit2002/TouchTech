@@ -1,8 +1,8 @@
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import { connectDB } from "@/utils/database";
-import User from "@/models/user";
+// import { connectDB } from "@/utils/database";
+// import User from "@/models/user";
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth environment variables");
 };

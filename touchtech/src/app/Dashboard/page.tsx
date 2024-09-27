@@ -17,8 +17,9 @@ export default function WallpaperSelector() {
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   let EMAIL=null;
-  if(session?.user?.email){
-    EMAIL=session.user.email;
+  if(session){
+    EMAIL=session.email;
+    console.log(EMAIL);
   }
   useEffect(() => {
     if (status === 'loading') return;

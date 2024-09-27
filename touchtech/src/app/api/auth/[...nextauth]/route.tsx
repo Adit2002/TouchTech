@@ -8,14 +8,12 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 }
 declare module "next-auth" {
   interface Session {
-    user: {
       id: string;
       name?: string | null;
       email?: string | null;
       image?: string | null;
-    };
-  }
-}
+    }
+};
 const authOption: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -34,8 +32,8 @@ const authOption: NextAuthOptions = {
           const sessionUser = await User.findOne({
             email: session.user.email,
           });
-          session.user.id = sessionUser._id.toString();
-          session.user.name = sessionUser.name;
+          session.id = sessionUser._id.toString();
+          session.name = sessionUser.name;
           return sessionUser;
         } catch (err) {
           console.log(err);

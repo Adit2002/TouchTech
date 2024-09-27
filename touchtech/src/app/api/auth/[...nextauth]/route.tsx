@@ -47,7 +47,6 @@ const authOption: NextAuthOptions = {
       console.log(profile);
       try {
         await connectDB();
-        // pexels-felixmittermeier-956999.jpg
         const emptyarr = [{imageName: "Pre1", imageURI : "https://touchtech-assignment2.s3.amazonaws.com/pexels-felixmittermeier-956999.jpg"},
           {imageName: "Pre2", imageURI : "https://touchtech-assignment2.s3.amazonaws.com/pexels-jessbaileydesign-743986.jpg"},
           {imageName: "Pre3", imageURI : "https://touchtech-assignment2.s3.amazonaws.com/pexels-padrinan-255379.jpg"},

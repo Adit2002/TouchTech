@@ -14,9 +14,9 @@ export async function fetchUserWallpaperByEmail(email) {
     }
     
     console.warn(`No user found with email: ${email}`);
-    return null; // Or you could return an empty array/object depending on your use case
+    return null; 
   } catch (err) {
     console.error('Error fetching user data:', err);
-    return null; // Consider throwing an error or returning a specific error message
+    return null;
   }
 }

@@ -5,21 +5,20 @@ import { uploadFile } from './action';
 import { fetchUserWallpaperByEmail } from './actionwallpaper';
 
 interface Wallpaper {
-  imageURI: string | null;
+  imageURI: string | number;
   imageName: string | null;
 }
 
 export default function WallpaperSelector() {
   const { data: session, status } = useSession();
-  const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]); // Type the state as an array of Wallpaper
+  const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]); 
   const [selectedWallpaper, setSelectedWallpaper] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   let EMAIL=null;
-  if(session){
-    // console.log(session.email);
-    EMAIL=session.email;
+  if(session?.user?.email){
+    EMAIL=session.user.email;
   }
   useEffect(() => {
     if (status === 'loading') return;
@@ -62,7 +61,7 @@ export default function WallpaperSelector() {
 
     try {
       if(EMAIL===null) return;
-      await uploadFile(formData, EMAIL); // Use session.user.email to get the email
+      await uploadFile(formData, EMAIL); 
       setMessage('File uploaded successfully!');
       setFile(null);
       setFileName('');

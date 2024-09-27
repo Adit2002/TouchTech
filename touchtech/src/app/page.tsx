@@ -3,19 +3,30 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { data: session } = useSession();
-  console.log(session);
+  const { data: session, status } = useSession();
+  const [email, setEmail] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+
   useEffect(() => {
     if (session && typeof window !== 'undefined') {
+      // Set localStorage when session is available
       localStorage.setItem("userProfile", JSON.stringify({
         email: session.user.email,
         name: session.user.name,
       }));
-    }
-  }, []);
-  const [email, setEmail] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
 
+      // Update state variables from session
+      setEmail(session.user.email);
+      setName(session.user.name);
+    } else {
+      // Clear localStorage if there's no session
+      localStorage.removeItem("userProfile");
+      setEmail(null);
+      setName(null);
+    }
+  }, [session]);
+
+  // Load userProfile from localStorage when the component mounts
   useEffect(() => {
     const storedUserProfile = localStorage.getItem("userProfile");
     if (storedUserProfile) {
@@ -36,10 +47,12 @@ export default function Home() {
         profiles, and AWS S3 for storing and serving your high-quality images.
       </p>
       <div className="space-x-4">
-        {session ? (
+        {status === "loading" ? (
+          <p>Loading...</p>
+        ) : session ? (
           <div className="text-center">
             <p className="text-xl text-gray-700 mb-4">
-              Hello, {name || session.user?.name} ({email || session.user?.email})! You are logged in.
+              Hello, {name} ({email})! You are logged in.
             </p>
             <button
               onClick={() => signOut()}

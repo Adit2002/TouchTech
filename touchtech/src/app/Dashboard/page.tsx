@@ -27,7 +27,7 @@ export default function WallpaperSelector() {
       const userProfile = JSON.parse(storedUserProfile);
       setEmail(userProfile.email); // Set email from local storage
     }
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     if (status === 'loading') return;

@@ -21,7 +21,7 @@ const authOption: NextAuthOptions = {
     async session({ session }) {
       try{
         console.log(session);
-        const Sesuser= await User.findOne({ email: session.user.email });
+        await User.findOne({ email: session.user.email });
         return session;
       }catch(err){
         console.log(err);

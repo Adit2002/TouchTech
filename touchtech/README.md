@@ -24,14 +24,10 @@ The image metadata (such as image names and S3 URIs) is stored in MongoDB, and t
    ```bash
    git clone https://github.com/Aditya2002/touchtech.git
    cd touchtech 
-   \`\`\
 2. **Install Dependencies:**
    ```bash
     npm install
-    \`\`\
 3. **Set Up Enviornment Variables **
-\`\`\
 4. **Run**
    ```bash
    npm run dev 
-   \`\`\

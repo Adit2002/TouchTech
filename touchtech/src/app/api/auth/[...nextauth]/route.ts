@@ -18,7 +18,7 @@ const authOption: NextAuthOptions = {
   ],
   secret: process.env.GOOGLE_CLIENT_SECRET,
   callbacks: {
-    async jwt({ token, user, profile }) {
+    async jwt({ token, user }) {
       if (user) {
         token.email = user.email; 
         token.name = user.name; 

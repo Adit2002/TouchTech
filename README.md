@@ -27,7 +27,15 @@ The image metadata (such as image names and S3 URIs) is stored in MongoDB, and t
 2. **Install Dependencies:**
    ```bash
     npm install
-3. **Set Up Enviornment Variables **
+3. **Set Up Enviornment Variables**
+   ```bash
+   GOOGLE_CLIENT_ID
+   GOOGLE_CLIENT_SECRET
+   MONGO_URI
+   AWS_REGION
+   AWS_ACCESSKEY
+   AWS_SECRET_ACCESS_KEY
+   AWS_BUCKET_NAME 
 4. **Run**
    ```bash
    npm run dev 

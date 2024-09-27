@@ -1,9 +1,29 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data: session } = useSession();
-  
+  useEffect(() => {
+    if (session && typeof window !== 'undefined') {
+      localStorage.setItem("userProfile", JSON.stringify({
+        email: session.user.email,
+        name: session.user.name,
+      }));
+    }
+  }, [session]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedUserProfile = localStorage.getItem("userProfile");
+    if (storedUserProfile) {
+      const userProfile = JSON.parse(storedUserProfile);
+      setEmail(userProfile.email);
+      setName(userProfile.name); 
+    }
+  }, [session]);
+
   return (
     <section className="min-h-screen bg-gray-100 text-gray-800 flex flex-col justify-center items-center p-6">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -18,7 +38,7 @@ export default function Home() {
         {session ? (
           <div className="text-center">
             <p className="text-xl text-gray-700 mb-4">
-              Hello, {session.user?.name} ({session.user?.email})! You are logged in.
+              Hello, {name || session.user?.name} ({email || session.user?.email})! You are logged in.
             </p>
             <button
               onClick={() => signOut()}

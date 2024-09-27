@@ -25,11 +25,6 @@ const authOption: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
-      session.user.email = token.email; 
-      session.user.name = token.name; 
-      return session;
-    },
     async signIn({ profile }) {
       if (!profile) return false;
       console.log(profile);

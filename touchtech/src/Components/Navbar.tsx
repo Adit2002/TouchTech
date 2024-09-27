@@ -8,6 +8,7 @@ const NavBar = () => {
   const router = useRouter(); // To handle redirection after sign out
 
   const handleSignOut = async () => {
+    localStorage.clear();
     await signOut({ redirect: false }); // Sign out without immediate redirection
     router.push('/'); // After logout, redirect to homepage
   };

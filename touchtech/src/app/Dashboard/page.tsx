@@ -11,18 +11,27 @@ interface Wallpaper {
 
 export default function WallpaperSelector() {
   const { data: session, status } = useSession();
-  const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]); 
+  const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]);
   const [selectedWallpaper, setSelectedWallpaper] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   
-  // Extract email from session
-  const email = session?.user?.email || null;
+  // State to hold email from local storage
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Extract email from local storage on component mount
+    const storedUserProfile = localStorage.getItem("userProfile");
+    if (storedUserProfile) {
+      const userProfile = JSON.parse(storedUserProfile);
+      setEmail(userProfile.email); // Set email from local storage
+    }
+  }, []);
 
   useEffect(() => {
     if (status === 'loading') return;
-    
+
     const fetchWallpapers = async () => {
       if (email) {
         try {
@@ -33,9 +42,9 @@ export default function WallpaperSelector() {
         }
       }
     };
-    
+
     fetchWallpapers();
-  }, [session, status, email]); 
+  }, [session, status, email]);
 
   const handleWallpaperChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedWallpaper(e.target.value);
@@ -62,7 +71,7 @@ export default function WallpaperSelector() {
 
     try {
       if (!email) return; // Ensure email is present
-      await uploadFile(formData, email); 
+      await uploadFile(formData, email);
       setMessage('File uploaded successfully!');
       setFile(null);
       setFileName('');

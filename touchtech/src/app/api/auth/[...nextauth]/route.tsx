@@ -8,11 +8,9 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 };
 declare module "next-auth" {
   interface Session {
-    User:{
-       id: string;
+    user:{
        name?: string | null;
        email?: string | null;
-       image?: string | null;
     }
   }
 };
@@ -29,15 +27,15 @@ const authOption: NextAuthOptions = {
   secret: process.env.GOOGLE_CLIENT_SECRET,
   callbacks: {
     async session({ session }) {
+      // console.log(session);
       if (session?.user?.email) {
         try {
           await connectDB();
           const sessionUser = await User.findOne({
             email: session.user.email,
           });
-          session.id = sessionUser._id.toString();
-          session.name = sessionUser.name;
-          return session;
+          session.user.name = sessionUser.name;
+          return sessionUser;
         } catch (err) {
           console.log(err);
         }

@@ -21,7 +21,7 @@ export default function WallpaperSelector() {
   // console.log(session.email);
   if(session){
     console.log(session);
-    EMAIL=session.email;
+    EMAIL=session.user.email;
     console.log(EMAIL);
   }
   else{
